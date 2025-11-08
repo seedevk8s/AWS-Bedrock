@@ -1,151 +1,91 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700">
   <defs>
     <style>
-      .title { font-family: Arial, sans-serif; font-size: 26px; font-weight: bold; fill: #232f3e; }
-      .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #545b64; }
-      .section-title { font-family: Arial, sans-serif; font-size: 18px; fill: #232f3e; font-weight: 600; }
-      .label { font-family: Arial, sans-serif; font-size: 12px; fill: #232f3e; font-weight: 600; }
-      .small-label { font-family: Arial, sans-serif; font-size: 10px; fill: #545b64; }
-      .code { font-family: 'Courier New', monospace; font-size: 10px; fill: #232f3e; }
-      .code-small { font-family: 'Courier New', monospace; font-size: 9px; fill: #232f3e; }
-      .highlight { font-weight: 600; fill: #ff9900; }
-      .aws-orange { fill: #ff9900; }
-      .aws-blue { fill: #527fff; }
-      .aws-green { fill: #1e8900; }
-      .box { fill: #ffffff; stroke: #545b64; stroke-width: 2; rx: 8; }
-      .native-box { fill: #ffe6e6; stroke: #d13212; stroke-width: 2; rx: 8; }
-      .langchain-box { fill: #e6ffe6; stroke: #1e8900; stroke-width: 2; rx: 8; }
-      .code-box { fill: #f5f5f5; stroke: #879596; stroke-width: 1.5; rx: 4; }
-      .arrow { fill: none; stroke: #232f3e; stroke-width: 2.5; marker-end: url(#arrowhead); }
+      .title { font-family: Arial, sans-serif; font-size: 28px; font-weight: bold; fill: #232f3e; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 16px; fill: #545b64; }
+      .label { font-family: Arial, sans-serif; font-size: 14px; fill: #232f3e; font-weight: 600; }
+      .code { font-family: 'Courier New', monospace; font-size: 11px; fill: #232f3e; }
+      .highlight { font-size: 15px; font-weight: 600; }
+      .native-box { fill: #ffe6e6; stroke: #d13212; stroke-width: 3; rx: 10; }
+      .langchain-box { fill: #e6ffe6; stroke: #1e8900; stroke-width: 3; rx: 10; }
+      .code-box { fill: #ffffff; stroke: #879596; stroke-width: 1.5; rx: 5; }
     </style>
-    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-      <polygon points="0 0, 10 3, 0 6" fill="#232f3e" />
-    </marker>
   </defs>
 
   <!-- Title -->
-  <text x="700" y="35" text-anchor="middle" class="title">bedrock.py vs bedrock_langchain.py</text>
-  <text x="700" y="58" text-anchor="middle" class="subtitle">Native boto3 API vs LangChain Abstraction</text>
+  <text x="600" y="40" text-anchor="middle" class="title">boto3 vs LangChain 비교</text>
+  <text x="600" y="65" text-anchor="middle" class="subtitle">같은 작업, 다른 코드 복잡도</text>
 
-  <!-- Left Side: bedrock.py (Native boto3) -->
-  <rect class="native-box" x="50" y="90" width="620" height="750"/>
-  <text x="360" y="120" text-anchor="middle" class="section-title" style="fill: #d13212;">bedrock.py - Native boto3</text>
-  <text x="360" y="138" text-anchor="middle" class="small-label">Low-level API, Manual Configuration</text>
+  <!-- Left: Native boto3 -->
+  <rect class="native-box" x="50" y="100" width="520" height="550"/>
+  <text x="310" y="140" text-anchor="middle" class="label" style="fill: #d13212; font-size: 20px;">bedrock.py (boto3 직접 사용)</text>
 
-  <!-- Step 1: Import -->
-  <rect class="box" x="80" y="160" width="560" height="50"/>
-  <text x="100" y="180" class="label">1. Import Libraries</text>
-  <rect class="code-box" x="100" y="190" width="520" height="13"/>
-  <text x="110" y="200" class="code-small">import boto3, json, botocore.exceptions</text>
+  <!-- Request 구성 -->
+  <rect class="code-box" x="80" y="170" width="460" height="180"/>
+  <text x="100" y="195" class="label" style="fill: #d13212;">1단계: 요청 객체 수동 구성</text>
+  <text x="100" y="220" class="code">native_request = {</text>
+  <text x="120" y="240" class="code">  "inputText": prompt,</text>
+  <text x="120" y="260" class="code">  "textGenerationConfig": {</text>
+  <text x="140" y="280" class="code">    "maxTokenCount": 512,</text>
+  <text x="140" y="300" class="code">    "temperature": 0.5,</text>
+  <text x="120" y="320" class="code">  }</text>
+  <text x="100" y="340" class="code">}</text>
 
-  <!-- Step 2: Initialize Client -->
-  <rect class="box" x="80" y="225" width="560" height="50"/>
-  <text x="100" y="245" class="label">2. Initialize Bedrock Client</text>
-  <rect class="code-box" x="100" y="255" width="520" height="13"/>
-  <text x="110" y="265" class="code-small">client = boto3.client("bedrock-runtime", region_name="us-east-1")</text>
+  <!-- JSON 변환 -->
+  <rect class="code-box" x="80" y="370" width="460" height="60"/>
+  <text x="100" y="395" class="label" style="fill: #d13212;">2단계: JSON 변환</text>
+  <text x="100" y="420" class="code">request = json.dumps(native_request)</text>
 
-  <!-- Step 3: Build Request -->
-  <rect class="box" x="80" y="290" width="560" height="140"/>
-  <text x="100" y="310" class="label">3. Manually Build Request Object</text>
-  <rect class="code-box" x="100" y="320" width="520" height="100"/>
-  <text x="110" y="332" class="code-small">native_request = {</text>
-  <text x="130" y="345" class="code-small">"inputText": prompt,</text>
-  <text x="130" y="358" class="code-small">"textGenerationConfig": {</text>
-  <text x="150" y="371" class="code-small">"maxTokenCount": 512,</text>
-  <text x="150" y="384" class="code-small">"temperature": 0.5,</text>
-  <text x="130" y="397" class="code-small">}</text>
-  <text x="110" y="410" class="code-small">}</text>
+  <!-- API 호출 -->
+  <rect class="code-box" x="80" y="450" width="460" height="60"/>
+  <text x="100" y="475" class="label" style="fill: #d13212;">3단계: API 호출</text>
+  <text x="100" y="500" class="code">response = client.invoke_model(</text>
+  <text x="120" y="520" class="code">modelId=model_id, body=request)</text>
 
-  <!-- Step 4: JSON Serialization -->
-  <rect class="box" x="80" y="445" width="560" height="50" fill="#fff5e6"/>
-  <text x="100" y="465" class="label">4. JSON Serialization</text>
-  <rect class="code-box" x="100" y="475" width="520" height="13"/>
-  <text x="110" y="485" class="code-small">request = json.dumps(native_request)</text>
+  <!-- 응답 파싱 -->
+  <rect class="code-box" x="80" y="530" width="460" height="100"/>
+  <text x="100" y="555" class="label" style="fill: #d13212;">4단계: 응답 수동 파싱</text>
+  <text x="100" y="580" class="code">model_response = json.loads(</text>
+  <text x="120" y="600" class="code">response["body"].read())</text>
+  <text x="100" y="620" class="code">text = model_response["results"][0]["outputText"]</text>
 
-  <!-- Step 5: Invoke Model -->
-  <rect class="box" x="80" y="510" width="560" height="70" fill="#ffe6e6"/>
-  <text x="100" y="530" class="label">5. Invoke Model with Error Handling</text>
-  <rect class="code-box" x="100" y="540" width="520" height="33"/>
-  <text x="110" y="552" class="code-small">response = client.invoke_model(</text>
-  <text x="130" y="565" class="code-small">modelId=model_id, body=request)</text>
+  <!-- Right: LangChain -->
+  <rect class="langchain-box" x="630" y="100" width="520" height="550"/>
+  <text x="890" y="140" text-anchor="middle" class="label" style="fill: #1e8900; font-size: 20px;">bedrock_langchain.py (LangChain)</text>
 
-  <!-- Step 6: Parse Response -->
-  <rect class="box" x="80" y="595" width="560" height="90" fill="#fff5e6"/>
-  <text x="100" y="615" class="label">6. Manually Parse Response</text>
-  <rect class="code-box" x="100" y="625" width="520" height="53"/>
-  <text x="110" y="637" class="code-small">model_response = json.loads(</text>
-  <text x="130" y="650" class="code-small">response["body"].read())</text>
-  <text x="110" y="663" class="code-small">response_text = model_response["results"][0]</text>
-  <text x="130" y="676" class="code-small">["outputText"]</text>
+  <!-- 모델 초기화 -->
+  <rect class="code-box" x="660" y="170" width="460" height="80"/>
+  <text x="680" y="195" class="label" style="fill: #1e8900;">1단계: 모델 초기화</text>
+  <text x="680" y="220" class="code">llm = ChatBedrock(</text>
+  <text x="700" y="240" class="code">model_id="amazon.titan-text-express-v1")</text>
 
-  <!-- Step 7: Output -->
-  <rect class="box" x="80" y="700" width="560" height="50"/>
-  <text x="100" y="720" class="label">7. Print Result</text>
-  <rect class="code-box" x="100" y="730" width="520" height="13"/>
-  <text x="110" y="740" class="code-small">print(response_text)</text>
+  <!-- 메시지 생성 -->
+  <rect class="code-box" x="660" y="270" width="460" height="100"/>
+  <text x="680" y="295" class="label" style="fill: #1e8900;">2단계: 메시지 생성</text>
+  <text x="680" y="320" class="code">messages = [</text>
+  <text x="700" y="340" class="code">HumanMessage(content="응원의 말을 해줘")</text>
+  <text x="680" y="360" class="code">]</text>
 
-  <!-- Complexity Badge -->
-  <rect x="80" y="765" width="560" height="60" fill="#d13212" rx="8"/>
-  <text x="360" y="790" text-anchor="middle" class="label" fill="white" font-size="14px">Complexity: HIGH</text>
-  <text x="360" y="810" text-anchor="middle" class="small-label" fill="white">7 steps | Manual JSON handling | Verbose error handling</text>
+  <!-- API 호출 (간단!) -->
+  <rect class="code-box" x="660" y="390" width="460" height="60" fill="#d4f4dd"/>
+  <text x="680" y="415" class="label" style="fill: #1e8900;">3단계: 호출 (끝!)</text>
+  <text x="680" y="440" class="code">response = llm.invoke(messages)</text>
 
-  <!-- Right Side: bedrock_langchain.py (LangChain) -->
-  <rect class="langchain-box" x="730" y="90" width="620" height="750"/>
-  <text x="1040" y="120" text-anchor="middle" class="section-title" style="fill: #1e8900;">bedrock_langchain.py - LangChain</text>
-  <text x="1040" y="138" text-anchor="middle" class="small-label">High-level Abstraction, Simplified</text>
+  <!-- 결과 -->
+  <rect class="code-box" x="660" y="470" width="460" height="60"/>
+  <text x="680" y="495" class="label" style="fill: #1e8900;">4단계: 결과 사용</text>
+  <text x="680" y="520" class="code">print(response.content)  # 자동 파싱됨!</text>
 
-  <!-- Step 1: Import -->
-  <rect class="box" x="760" y="160" width="560" height="50"/>
-  <text x="780" y="180" class="label">1. Import LangChain Components</text>
-  <rect class="code-box" x="780" y="190" width="520" height="13"/>
-  <text x="790" y="200" class="code-small">from langchain_aws import ChatBedrock</text>
+  <!-- Benefits -->
+  <rect x="660" y="550" width="460" height="80" fill="#1e8900" rx="8"/>
+  <text x="890" y="580" text-anchor="middle" class="highlight" fill="white">✓ JSON 변환 자동</text>
+  <text x="890" y="605" text-anchor="middle" class="highlight" fill="white">✓ 에러 처리 자동</text>
+  <text x="890" y="630" text-anchor="middle" class="highlight" fill="white">✓ 응답 파싱 자동</text>
 
-  <!-- Step 2: Initialize Model -->
-  <rect class="box" x="760" y="225" width="560" height="60" fill="#e6ffe6"/>
-  <text x="780" y="245" class="label">2. Initialize ChatBedrock (One Line!)</text>
-  <rect class="code-box" x="780" y="255" width="520" height="20"/>
-  <text x="790" y="267" class="code-small">llm = ChatBedrock(</text>
-  <text x="810" y="280" class="code-small">model_id="amazon.titan-text-express-v1")</text>
+  <!-- Bottom comparison -->
+  <rect x="50" y="670" width="520" height="20" fill="#d13212"/>
+  <text x="310" y="685" text-anchor="middle" class="label" fill="white">복잡도: 높음 (4단계 + 수동 처리)</text>
 
-  <!-- Step 3: Create Message -->
-  <rect class="box" x="760" y="300" width="560" height="90" fill="#e6ffe6"/>
-  <text x="780" y="320" class="label">3. Create Prompt with HumanMessage</text>
-  <rect class="code-box" x="780" y="330" width="520" height="53"/>
-  <text x="790" y="342" class="code-small">prompt_message = [</text>
-  <text x="810" y="355" class="code-small">HumanMessage(content=</text>
-  <text x="830" y="368" class="code-small">"Amazon Bedrock 강의를 듣고 있는"</text>
-  <text x="830" y="381" class="code-small">"수강생들에게 응원의 말을 해줘.")</text>
-  <text x="790" y="394" class="code-small">]</text>
-
-  <!-- Step 4: Invoke (Simple!) -->
-  <rect class="box" x="760" y="405" width="560" height="60" fill="#d4f4dd"/>
-  <text x="780" y="425" class="label">4. Invoke Model (Auto-handles Everything!)</text>
-  <rect class="code-box" x="780" y="435" width="520" height="20"/>
-  <text x="790" y="447" class="code-small">response = llm.invoke(prompt_message)</text>
-  <text x="790" y="462" class="small-label" style="fill: #1e8900;">✓ Auto JSON serialization | ✓ Auto error handling</text>
-
-  <!-- Step 5: Output -->
-  <rect class="box" x="760" y="480" width="560" height="70"/>
-  <text x="780" y="500" class="label">5. Access Response (Auto-parsed!)</text>
-  <rect class="code-box" x="780" y="510" width="520" height="33"/>
-  <text x="790" y="522" class="code-small">print(response)  # Full response object</text>
-  <text x="790" y="535" class="code-small">print(response.content)  # Just the text</text>
-
-  <!-- Benefits Box -->
-  <rect x="760" y="565" width="560" height="100" fill="#1e8900" rx="8"/>
-  <text x="1040" y="590" text-anchor="middle" class="label" fill="white" font-size="14px">LangChain Benefits</text>
-  <text x="780" y="610" class="small-label" fill="white">✓ Automatic request/response handling</text>
-  <text x="780" y="628" class="small-label" fill="white">✓ Built-in error handling &amp; retries</text>
-  <text x="780" y="646" class="small-label" fill="white">✓ Message abstraction (HumanMessage, SystemMessage, etc.)</text>
-  <text x="780" y="664" class="small-label" fill="white">✓ Easy model switching &amp; chaining</text>
-
-  <!-- Complexity Badge -->
-  <rect x="760" y="765" width="560" height="60" fill="#1e8900" rx="8"/>
-  <text x="1040" y="790" text-anchor="middle" class="label" fill="white" font-size="14px">Complexity: LOW</text>
-  <text x="1040" y="810" text-anchor="middle" class="small-label" fill="white">5 steps | Auto JSON handling | Built-in error handling</text>
-
-  <!-- Comparison Arrow -->
-  <text x="700" y="870" text-anchor="middle" class="section-title" style="fill: #ff9900;">VS</text>
-  <path d="M 670 450 L 730 450" class="arrow"/>
-  <text x="700" y="445" text-anchor="middle" class="small-label" fill="#ff9900" font-weight="600">LangChain simplifies!</text>
+  <rect x="630" y="670" width="520" height="20" fill="#1e8900"/>
+  <text x="890" y="685" text-anchor="middle" class="label" fill="white">복잡도: 낮음 (3단계, 대부분 자동)</text>
 </svg>
