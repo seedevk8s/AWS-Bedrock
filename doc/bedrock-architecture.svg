@@ -1,0 +1,209 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 24px; font-weight: bold; fill: #232f3e; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #545b64; }
+      .label { font-family: Arial, sans-serif; font-size: 13px; fill: #232f3e; font-weight: 600; }
+      .small-label { font-family: Arial, sans-serif; font-size: 11px; fill: #545b64; }
+      .aws-orange { fill: #ff9900; }
+      .aws-blue { fill: #527fff; }
+      .aws-green { fill: #1e8900; }
+      .aws-purple { fill: #b366ff; }
+      .aws-red { fill: #d13212; }
+      .box { fill: #ffffff; stroke: #545b64; stroke-width: 2; rx: 5; }
+      .main-box { fill: #f9f9f9; stroke: #232f3e; stroke-width: 2.5; rx: 8; }
+      .layer-box { fill: #ffffff; stroke: #879596; stroke-width: 1.5; rx: 6; stroke-dasharray: 5,5; }
+      .arrow { fill: none; stroke: #545b64; stroke-width: 2; marker-end: url(#arrowhead); }
+      .thick-arrow { fill: none; stroke: #232f3e; stroke-width: 3; marker-end: url(#arrowhead-thick); }
+      .gradient-box { fill: url(#grad1); stroke: #232f3e; stroke-width: 2; rx: 8; }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#545b64" />
+    </marker>
+    <marker id="arrowhead-thick" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#232f3e" />
+    </marker>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#fff5e6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Title -->
+  <text x="600" y="35" text-anchor="middle" class="title">AWS Bedrock Architecture</text>
+  <text x="600" y="55" text-anchor="middle" class="subtitle">Complete Foundation Model Platform</text>
+
+  <!-- Client Layer -->
+  <rect class="layer-box" x="50" y="80" width="1100" height="100"/>
+  <text x="600" y="100" text-anchor="middle" class="label">Client Applications Layer</text>
+
+  <rect class="box aws-blue" x="100" y="115" width="140" height="50"/>
+  <text x="170" y="145" text-anchor="middle" class="label" fill="white">Web Apps</text>
+
+  <rect class="box aws-blue" x="270" y="115" width="140" height="50"/>
+  <text x="340" y="145" text-anchor="middle" class="label" fill="white">Mobile Apps</text>
+
+  <rect class="box aws-blue" x="440" y="115" width="140" height="50"/>
+  <text x="510" y="145" text-anchor="middle" class="label" fill="white">Backend Services</text>
+
+  <rect class="box aws-blue" x="610" y="115" width="140" height="50"/>
+  <text x="680" y="145" text-anchor="middle" class="label" fill="white">IoT Devices</text>
+
+  <rect class="box aws-blue" x="780" y="115" width="140" height="50"/>
+  <text x="850" y="145" text-anchor="middle" class="label" fill="white">Chatbots</text>
+
+  <rect class="box aws-blue" x="950" y="115" width="140" height="50"/>
+  <text x="1020" y="145" text-anchor="middle" class="label" fill="white">Data Analytics</text>
+
+  <!-- API Gateway Layer -->
+  <rect class="gradient-box" x="50" y="210" width="1100" height="80"/>
+  <text x="600" y="235" text-anchor="middle" class="label">AWS Bedrock API Gateway</text>
+  <text x="600" y="255" text-anchor="middle" class="small-label">IAM Authentication | VPC Endpoint | CloudWatch Monitoring</text>
+  <rect class="box aws-orange" x="450" y="265" width="300" height="20"/>
+  <text x="600" y="279" text-anchor="middle" class="small-label" fill="white">bedrock-runtime.region.amazonaws.com</text>
+
+  <!-- Arrows from Client to API -->
+  <path class="thick-arrow" d="M 170 165 L 170 210"/>
+  <path class="thick-arrow" d="M 340 165 L 340 210"/>
+  <path class="thick-arrow" d="M 510 165 L 510 210"/>
+  <path class="thick-arrow" d="M 680 165 L 680 210"/>
+  <path class="thick-arrow" d="M 850 165 L 850 210"/>
+  <path class="thick-arrow" d="M 1020 165 L 1020 210"/>
+
+  <!-- Core Bedrock Services -->
+  <rect class="main-box" x="50" y="320" width="1100" height="270"/>
+  <text x="600" y="345" text-anchor="middle" class="label">AWS Bedrock Core Services</text>
+
+  <!-- Foundation Models -->
+  <rect class="layer-box" x="70" y="360" width="500" height="215"/>
+  <text x="320" y="380" text-anchor="middle" class="label">Foundation Models (FMs)</text>
+
+  <rect class="box aws-purple" x="90" y="395" width="110" height="50"/>
+  <text x="145" y="413" text-anchor="middle" class="small-label" fill="white">Anthropic</text>
+  <text x="145" y="428" text-anchor="middle" class="small-label" fill="white">Claude 3</text>
+
+  <rect class="box aws-purple" x="220" y="395" width="110" height="50"/>
+  <text x="275" y="413" text-anchor="middle" class="small-label" fill="white">Amazon</text>
+  <text x="275" y="428" text-anchor="middle" class="small-label" fill="white">Titan</text>
+
+  <rect class="box aws-purple" x="350" y="395" width="110" height="50"/>
+  <text x="405" y="413" text-anchor="middle" class="small-label" fill="white">Meta</text>
+  <text x="405" y="428" text-anchor="middle" class="small-label" fill="white">Llama 3</text>
+
+  <rect class="box aws-purple" x="90" y="460" width="110" height="50"/>
+  <text x="145" y="478" text-anchor="middle" class="small-label" fill="white">AI21 Labs</text>
+  <text x="145" y="493" text-anchor="middle" class="small-label" fill="white">Jurassic-2</text>
+
+  <rect class="box aws-purple" x="220" y="460" width="110" height="50"/>
+  <text x="275" y="478" text-anchor="middle" class="small-label" fill="white">Cohere</text>
+  <text x="275" y="493" text-anchor="middle" class="small-label" fill="white">Command</text>
+
+  <rect class="box aws-purple" x="350" y="460" width="110" height="50"/>
+  <text x="405" y="478" text-anchor="middle" class="small-label" fill="white">Stability AI</text>
+  <text x="405" y="493" text-anchor="middle" class="small-label" fill="white">Stable Diff.</text>
+
+  <rect class="box aws-green" x="90" y="525" width="370" height="35"/>
+  <text x="275" y="547" text-anchor="middle" class="small-label" fill="white">Model Inference Engine | Token Processing | Response Generation</text>
+
+  <!-- Knowledge Bases -->
+  <rect class="box aws-orange" x="590" y="360" width="240" height="70"/>
+  <text x="710" y="383" text-anchor="middle" class="label" fill="white">Knowledge Bases</text>
+  <text x="710" y="403" text-anchor="middle" class="small-label" fill="white">RAG (Retrieval-Augmented</text>
+  <text x="710" y="418" text-anchor="middle" class="small-label" fill="white">Generation)</text>
+
+  <!-- Agents -->
+  <rect class="box aws-red" x="850" y="360" width="240" height="70"/>
+  <text x="970" y="383" text-anchor="middle" class="label" fill="white">Agents</text>
+  <text x="970" y="403" text-anchor="middle" class="small-label" fill="white">Multi-step Task</text>
+  <text x="970" y="418" text-anchor="middle" class="small-label" fill="white">Automation</text>
+
+  <!-- Fine-tuning -->
+  <rect class="box aws-green" x="590" y="445" width="240" height="60"/>
+  <text x="710" y="465" text-anchor="middle" class="label" fill="white">Model Customization</text>
+  <text x="710" y="485" text-anchor="middle" class="small-label" fill="white">Fine-tuning</text>
+  <text x="710" y="498" text-anchor="middle" class="small-label" fill="white">Custom Models</text>
+
+  <!-- Guardrails -->
+  <rect class="box aws-orange" x="850" y="445" width="240" height="60"/>
+  <text x="970" y="465" text-anchor="middle" class="label" fill="white">Guardrails</text>
+  <text x="970" y="485" text-anchor="middle" class="small-label" fill="white">Content Filtering</text>
+  <text x="970" y="498" text-anchor="middle" class="small-label" fill="white">Safety Controls</text>
+
+  <!-- Model Evaluation -->
+  <rect class="box aws-blue" x="590" y="520" width="240" height="55"/>
+  <text x="710" y="540" text-anchor="middle" class="label" fill="white">Model Evaluation</text>
+  <text x="710" y="558" text-anchor="middle" class="small-label" fill="white">Performance Metrics</text>
+
+  <!-- Prompt Management -->
+  <rect class="box aws-red" x="850" y="520" width="240" height="55"/>
+  <text x="970" y="540" text-anchor="middle" class="label" fill="white">Prompt Management</text>
+  <text x="970" y="558" text-anchor="middle" class="small-label" fill="white">Flows & Templates</text>
+
+  <!-- Arrows from API to Services -->
+  <path class="arrow" d="M 300 290 L 300 360"/>
+  <path class="arrow" d="M 710 290 L 710 360"/>
+  <path class="arrow" d="M 970 290 L 970 360"/>
+
+  <!-- Data & Integration Layer -->
+  <rect class="layer-box" x="50" y="620" width="1100" height="120"/>
+  <text x="600" y="645" text-anchor="middle" class="label">Data Sources & Integration</text>
+
+  <rect class="box aws-orange" x="100" y="660" width="150" height="60"/>
+  <text x="175" y="683" text-anchor="middle" class="small-label">Amazon S3</text>
+  <text x="175" y="698" text-anchor="middle" class="small-label">Data Storage</text>
+
+  <rect class="box aws-blue" x="280" y="660" width="150" height="60"/>
+  <text x="355" y="683" text-anchor="middle" class="small-label">Vector DB</text>
+  <text x="355" y="698" text-anchor="middle" class="small-label">OpenSearch</text>
+
+  <rect class="box aws-green" x="460" y="660" width="150" height="60"/>
+  <text x="535" y="683" text-anchor="middle" class="small-label">Databases</text>
+  <text x="535" y="698" text-anchor="middle" class="small-label">RDS / DynamoDB</text>
+
+  <rect class="box aws-purple" x="640" y="660" width="150" height="60"/>
+  <text x="715" y="683" text-anchor="middle" class="small-label">External APIs</text>
+  <text x="715" y="698" text-anchor="middle" class="small-label">Lambda Functions</text>
+
+  <rect class="box aws-red" x="820" y="660" width="150" height="60"/>
+  <text x="895" y="683" text-anchor="middle" class="small-label">Data Processing</text>
+  <text x="895" y="698" text-anchor="middle" class="small-label">ETL Pipelines</text>
+
+  <rect class="box aws-orange" x="1000" y="660" width="150" height="60"/>
+  <text x="1075" y="683" text-anchor="middle" class="small-label">Training Data</text>
+  <text x="1075" y="698" text-anchor="middle" class="small-label">Fine-tuning Sets</text>
+
+  <!-- Arrows from Data to Services -->
+  <path class="arrow" d="M 175 660 L 175 620 L 710 620 L 710 575"/>
+  <path class="arrow" d="M 355 660 L 355 635 L 710 635 L 710 575"/>
+  <path class="arrow" d="M 535 660 L 535 635 L 710 635"/>
+  <path class="arrow" d="M 715 660 L 715 590 L 970 590 L 970 545"/>
+  <path class="arrow" d="M 895 660 L 895 615 L 710 615 L 710 575"/>
+  <path class="arrow" d="M 1075 660 L 1075 600 L 710 600 L 710 575"/>
+
+  <!-- Security & Compliance Layer -->
+  <rect class="gradient-box" x="50" y="770" width="1100" height="100"/>
+  <text x="600" y="795" text-anchor="middle" class="label">Security & Compliance Layer</text>
+
+  <rect class="box" x="100" y="810" width="180" height="45"/>
+  <text x="190" y="828" text-anchor="middle" class="small-label">IAM & Access Control</text>
+  <text x="190" y="843" text-anchor="middle" class="small-label">Fine-grained Permissions</text>
+
+  <rect class="box" x="310" y="810" width="180" height="45"/>
+  <text x="400" y="828" text-anchor="middle" class="small-label">VPC & Network Isolation</text>
+  <text x="400" y="843" text-anchor="middle" class="small-label">Private Endpoints</text>
+
+  <rect class="box" x="520" y="810" width="180" height="45"/>
+  <text x="610" y="828" text-anchor="middle" class="small-label">Encryption</text>
+  <text x="610" y="843" text-anchor="middle" class="small-label">At Rest & In Transit</text>
+
+  <rect class="box" x="730" y="810" width="180" height="45"/>
+  <text x="820" y="828" text-anchor="middle" class="small-label">CloudTrail Logging</text>
+  <text x="820" y="843" text-anchor="middle" class="small-label">Audit & Compliance</text>
+
+  <rect class="box" x="940" y="810" width="180" height="45"/>
+  <text x="1030" y="828" text-anchor="middle" class="small-label">Data Privacy</text>
+  <text x="1030" y="843" text-anchor="middle" class="small-label">No Model Training</text>
+
+  <!-- Arrows from Security to Core Services -->
+  <path class="arrow" d="M 600 770 L 600 590"/>
+</svg>
