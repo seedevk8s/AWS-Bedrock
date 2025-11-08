@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 28px; font-weight: bold; fill: #232f3e; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 16px; fill: #545b64; }
+      .label { font-family: Arial, sans-serif; font-size: 14px; fill: #232f3e; font-weight: 600; }
+      .code { font-family: 'Courier New', monospace; font-size: 11px; fill: #232f3e; }
+      .highlight { font-size: 15px; font-weight: 600; }
+      .invoke-box { fill: #fff5e6; stroke: #ff9900; stroke-width: 3; rx: 10; }
+      .converse-box { fill: #e6f2ff; stroke: #527fff; stroke-width: 3; rx: 10; }
+      .code-box { fill: #ffffff; stroke: #879596; stroke-width: 1.5; rx: 5; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="600" y="40" text-anchor="middle" class="title">invoke_model() vs converse() 비교</text>
+  <text x="600" y="65" text-anchor="middle" class="subtitle">Native API vs Converse API</text>
+
+  <!-- Left: invoke_model() -->
+  <rect class="invoke-box" x="50" y="100" width="520" height="650"/>
+  <text x="310" y="140" text-anchor="middle" class="label" style="fill: #ff9900; font-size: 20px;">invoke_model() - 텍스트 전용</text>
+
+  <!-- 요청 구조 -->
+  <rect class="code-box" x="80" y="170" width="460" height="140"/>
+  <text x="100" y="195" class="label" style="fill: #ff9900;">요청 구조 (모델마다 다름)</text>
+  <text x="100" y="220" class="code">native_request = {</text>
+  <text x="120" y="240" class="code">  "inputText": prompt,</text>
+  <text x="120" y="260" class="code">  "textGenerationConfig": {</text>
+  <text x="140" y="280" class="code">    "maxTokenCount": 512,</text>
+  <text x="140" y="300" class="code">    "temperature": 0.5</text>
+  <text x="100" y="320" class="code">  }</text>
+
+  <!-- JSON 변환 -->
+  <rect class="code-box" x="80" y="330" width="460" height="40"/>
+  <text x="100" y="355" class="code">request = json.dumps(native_request)</text>
+
+  <!-- API 호출 -->
+  <rect class="code-box" x="80" y="390" width="460" height="60"/>
+  <text x="100" y="415" class="label" style="fill: #ff9900;">API 호출</text>
+  <text x="100" y="440" class="code">response = client.invoke_model(</text>
+  <text x="120" y="460" class="code">modelId=model_id, body=request)</text>
+
+  <!-- 응답 파싱 -->
+  <rect class="code-box" x="80" y="470" width="460" height="80"/>
+  <text x="100" y="495" class="label" style="fill: #ff9900;">응답 파싱 (복잡)</text>
+  <text x="100" y="520" class="code">json.loads(response["body"].read())</text>
+  <text x="100" y="540" class="code">text = response["results"][0]</text>
+  <text x="120" y="560" class="code">["outputText"]</text>
+
+  <!-- 한계 -->
+  <rect x="80" y="570" width="460" height="160" fill="#fff5e6" stroke="#ff9900" stroke-width="2" rx="8"/>
+  <text x="310" y="600" text-anchor="middle" class="label" style="fill: #ff9900;">한계점</text>
+  <text x="100" y="625" class="code">❌ 텍스트만 지원 (이미지 불가)</text>
+  <text x="100" y="645" class="code">❌ 모델마다 요청 구조 다름</text>
+  <text x="100" y="665" class="code">❌ JSON 직렬화 수동</text>
+  <text x="100" y="685" class="code">❌ 응답 파싱 복잡</text>
+  <text x="100" y="705" class="code">❌ 대화 관리 불편</text>
+
+  <!-- Right: converse() -->
+  <rect class="converse-box" x="630" y="100" width="520" height="650"/>
+  <text x="890" y="140" text-anchor="middle" class="label" style="fill: #527fff; font-size: 20px;">converse() - 멀티모달</text>
+
+  <!-- 요청 구조 -->
+  <rect class="code-box" x="660" y="170" width="460" height="180"/>
+  <text x="680" y="195" class="label" style="fill: #527fff;">요청 구조 (표준화됨)</text>
+  <text x="680" y="220" class="code">conversation = [{</text>
+  <text x="700" y="240" class="code">"role": "user",</text>
+  <text x="700" y="260" class="code">"content": [</text>
+  <text x="720" y="280" class="code">{"text": user_message},</text>
+  <text x="720" y="300" class="code">{"image": {"format": "webp",</text>
+  <text x="740" y="320" class="code">"source": {"bytes": image_bytes}}}</text>
+  <text x="700" y="340" class="code">]</text>
+  <text x="680" y="360" class="code">}]</text>
+
+  <!-- API 호출 -->
+  <rect class="code-box" x="660" y="370" width="460" height="100" fill="#e6f7ff"/>
+  <text x="680" y="395" class="label" style="fill: #527fff;">API 호출 (간단!)</text>
+  <text x="680" y="420" class="code">response = client.converse(</text>
+  <text x="700" y="440" class="code">modelId=model_id,</text>
+  <text x="700" y="460" class="code">messages=conversation,</text>
+  <text x="700" y="480" class="code">inferenceConfig={...})</text>
+
+  <!-- 응답 파싱 -->
+  <rect class="code-box" x="660" y="490" width="460" height="60"/>
+  <text x="680" y="515" class="label" style="fill: #527fff;">응답 파싱 (간단)</text>
+  <text x="680" y="540" class="code">text = response["output"]["message"]</text>
+  <text x="700" y="560" class="code">["content"][0]["text"]</text>
+
+  <!-- 장점 -->
+  <rect x="660" y="570" width="460" height="160" fill="#527fff" rx="8"/>
+  <text x="890" y="600" text-anchor="middle" class="label" fill="white">장점</text>
+  <text x="680" y="625" class="highlight" fill="white">✓ 멀티모달 지원 (텍스트+이미지)</text>
+  <text x="680" y="650" class="highlight" fill="white">✓ 모든 모델 동일한 구조</text>
+  <text x="680" y="675" class="highlight" fill="white">✓ JSON 자동 처리</text>
+  <text x="680" y="700" class="highlight" fill="white">✓ 대화 관리 쉬움</text>
+  <text x="680" y="725" class="highlight" fill="white">✓ inferenceConfig 통일</text>
+
+  <!-- Bottom comparison -->
+  <rect x="50" y="770" width="520" height="20" fill="#ff9900"/>
+  <text x="310" y="785" text-anchor="middle" class="label" fill="white">레거시 API (모델 종속적)</text>
+
+  <rect x="630" y="770" width="520" height="20" fill="#527fff"/>
+  <text x="890" y="785" text-anchor="middle" class="label" fill="white">권장 API (통일된 인터페이스)</text>
+</svg>
