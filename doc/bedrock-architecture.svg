@@ -137,16 +137,16 @@
   <!-- Prompt Management -->
   <rect class="box aws-red" x="850" y="520" width="240" height="55"/>
   <text x="970" y="540" text-anchor="middle" class="label" fill="white">Prompt Management</text>
-  <text x="970" y="558" text-anchor="middle" class="small-label" fill="white">Flows & Templates</text>
+  <text x="970" y="558" text-anchor="middle" class="small-label" fill="white">Flows &amp; Templates</text>
 
   <!-- Arrows from API to Services -->
   <path class="arrow" d="M 300 290 L 300 360"/>
   <path class="arrow" d="M 710 290 L 710 360"/>
   <path class="arrow" d="M 970 290 L 970 360"/>
 
-  <!-- Data & Integration Layer -->
+  <!-- Data &amp; Integration Layer -->
   <rect class="layer-box" x="50" y="620" width="1100" height="120"/>
-  <text x="600" y="645" text-anchor="middle" class="label">Data Sources & Integration</text>
+  <text x="600" y="645" text-anchor="middle" class="label">Data Sources &amp; Integration</text>
 
   <rect class="box aws-orange" x="100" y="660" width="150" height="60"/>
   <text x="175" y="683" text-anchor="middle" class="small-label">Amazon S3</text>
@@ -180,25 +180,25 @@
   <path class="arrow" d="M 895 660 L 895 615 L 710 615 L 710 575"/>
   <path class="arrow" d="M 1075 660 L 1075 600 L 710 600 L 710 575"/>
 
-  <!-- Security & Compliance Layer -->
+  <!-- Security &amp; Compliance Layer -->
   <rect class="gradient-box" x="50" y="770" width="1100" height="100"/>
-  <text x="600" y="795" text-anchor="middle" class="label">Security & Compliance Layer</text>
+  <text x="600" y="795" text-anchor="middle" class="label">Security &amp; Compliance Layer</text>
 
   <rect class="box" x="100" y="810" width="180" height="45"/>
-  <text x="190" y="828" text-anchor="middle" class="small-label">IAM & Access Control</text>
+  <text x="190" y="828" text-anchor="middle" class="small-label">IAM &amp; Access Control</text>
   <text x="190" y="843" text-anchor="middle" class="small-label">Fine-grained Permissions</text>
 
   <rect class="box" x="310" y="810" width="180" height="45"/>
-  <text x="400" y="828" text-anchor="middle" class="small-label">VPC & Network Isolation</text>
+  <text x="400" y="828" text-anchor="middle" class="small-label">VPC &amp; Network Isolation</text>
   <text x="400" y="843" text-anchor="middle" class="small-label">Private Endpoints</text>
 
   <rect class="box" x="520" y="810" width="180" height="45"/>
   <text x="610" y="828" text-anchor="middle" class="small-label">Encryption</text>
-  <text x="610" y="843" text-anchor="middle" class="small-label">At Rest & In Transit</text>
+  <text x="610" y="843" text-anchor="middle" class="small-label">At Rest &amp; In Transit</text>
 
   <rect class="box" x="730" y="810" width="180" height="45"/>
   <text x="820" y="828" text-anchor="middle" class="small-label">CloudTrail Logging</text>
-  <text x="820" y="843" text-anchor="middle" class="small-label">Audit & Compliance</text>
+  <text x="820" y="843" text-anchor="middle" class="small-label">Audit &amp; Compliance</text>
 
   <rect class="box" x="940" y="810" width="180" height="45"/>
   <text x="1030" y="828" text-anchor="middle" class="small-label">Data Privacy</text>
