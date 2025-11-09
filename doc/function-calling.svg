@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1100">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 26px; font-weight: bold; fill: #232f3e; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 14px; fill: #545b64; }
+      .label { font-family: Arial, sans-serif; font-size: 13px; fill: #232f3e; font-weight: 600; }
+      .small-label { font-family: Arial, sans-serif; font-size: 11px; fill: #545b64; }
+      .code { font-family: 'Courier New', monospace; font-size: 10px; fill: #232f3e; }
+      .step-num { font-family: Arial, sans-serif; font-size: 18px; font-weight: bold; fill: #ffffff; }
+      .box { fill: #ffffff; stroke: #545b64; stroke-width: 2; rx: 8; }
+      .user-box { fill: #e6f2ff; stroke: #527fff; stroke-width: 2; rx: 8; }
+      .llm-box { fill: #fff5e6; stroke: #ff9900; stroke-width: 2; rx: 8; }
+      .function-box { fill: #e6ffe6; stroke: #1e8900; stroke-width: 2; rx: 8; }
+      .code-box { fill: #f5f5f5; stroke: #879596; stroke-width: 1.5; rx: 4; }
+      .arrow { fill: none; stroke: #232f3e; stroke-width: 2.5; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#232f3e" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="500" y="35" text-anchor="middle" class="title">Function Calling (함수 호출)</text>
+  <text x="500" y="55" text-anchor="middle" class="subtitle">LLM이 필요한 함수를 자동으로 선택하고 실행</text>
+
+  <!-- Step 1: 함수 정의 -->
+  <rect class="function-box" x="50" y="80" width="900" height="160"/>
+  <circle cx="85" cy="105" r="18" fill="#1e8900"/>
+  <text x="85" y="112" text-anchor="middle" class="step-num">1</text>
+  <text x="110" y="110" class="label" style="fill: #1e8900;">함수 정의 (functions.py)</text>
+
+  <!-- Python 함수 -->
+  <rect class="code-box" x="80" y="130" width="420" height="95"/>
+  <text x="100" y="150" class="code">def get_current_time():</text>
+  <text x="120" y="165" class="code">now = datetime.now()</text>
+  <text x="120" y="180" class="code">return now.strftime(</text>
+  <text x="140" y="195" class="code">"%Y-%m-%d %H:%M:%S")</text>
+  <text x="100" y="215" class="small-label" style="fill: #1e8900;">실제 실행될 Python 함수</text>
+
+  <!-- Tool Config -->
+  <rect class="code-box" x="520" y="130" width="410" height="95"/>
+  <text x="540" y="150" class="code">tool_config = {</text>
+  <text x="560" y="165" class="code">"name": "get_current_time",</text>
+  <text x="560" y="180" class="code">"description": "현재 시간 반환",</text>
+  <text x="560" y="195" class="code">"inputSchema": {...}</text>
+  <text x="540" y="210" class="code">}</text>
+  <text x="540" y="230" class="small-label" style="fill: #1e8900;">LLM에게 전달할 함수 설명</text>
+
+  <!-- Step 2: 사용자 질문 -->
+  <rect class="user-box" x="50" y="260" width="900" height="80"/>
+  <circle cx="85" cy="285" r="18" fill="#527fff"/>
+  <text x="85" y="292" text-anchor="middle" class="step-num">2</text>
+  <text x="110" y="290" class="label" style="fill: #527fff;">사용자 질문</text>
+
+  <rect class="code-box" x="80" y="310" width="840" height="20"/>
+  <text x="100" y="325" class="code" style="font-size: 12px;">"지금 몇 시야?"</text>
+
+  <path class="arrow" d="M 500 340 L 500 370"/>
+
+  <!-- Step 3: LLM 판단 -->
+  <rect class="llm-box" x="50" y="370" width="900" height="120"/>
+  <circle cx="85" cy="395" r="18" fill="#ff9900"/>
+  <text x="85" y="402" text-anchor="middle" class="step-num">3</text>
+  <text x="110" y="400" class="label" style="fill: #ff9900;">LLM 분석 &amp; 함수 선택</text>
+
+  <rect class="code-box" x="80" y="420" width="840" height="60"/>
+  <text x="100" y="440" class="small-label">💭 LLM 사고 과정:</text>
+  <text x="100" y="460" class="code">"사용자가 현재 시간을 물어봄 → get_current_time() 함수 필요"</text>
+  <text x="100" y="475" class="code">→ toolUse 요청 생성</text>
+
+  <path class="arrow" d="M 500 490 L 500 520"/>
+
+  <!-- Step 4: 함수 실행 -->
+  <rect class="function-box" x="50" y="520" width="900" height="120"/>
+  <circle cx="85" cy="545" r="18" fill="#1e8900"/>
+  <text x="85" y="552" text-anchor="middle" class="step-num">4</text>
+  <text x="110" y="550" class="label" style="fill: #1e8900;">함수 실행 (애플리케이션에서)</text>
+
+  <rect class="code-box" x="80" y="570" width="840" height="60"/>
+  <text x="100" y="590" class="code">if content_block["type"] == "toolUse":</text>
+  <text x="120" y="605" class="code">function_name = content_block["name"]  # "get_current_time"</text>
+  <text x="120" y="620" class="code">result = get_current_time()  # "2025-11-09 14:30:00"</text>
+
+  <path class="arrow" d="M 500 640 L 500 670"/>
+
+  <!-- Step 5: 결과를 LLM에 전달 -->
+  <rect class="llm-box" x="50" y="670" width="900" height="120"/>
+  <circle cx="85" cy="695" r="18" fill="#ff9900"/>
+  <text x="85" y="702" text-anchor="middle" class="step-num">5</text>
+  <text x="110" y="700" class="label" style="fill: #ff9900;">함수 결과를 LLM에 전달</text>
+
+  <rect class="code-box" x="80" y="720" width="840" height="60"/>
+  <text x="100" y="740" class="code">tool_result = {</text>
+  <text x="120" y="755" class="code">"toolUseId": "...",</text>
+  <text x="120" y="770" class="code">"content": [{"text": "2025-11-09 14:30:00"}]</text>
+  <text x="100" y="785" class="code">}</text>
+
+  <path class="arrow" d="M 500 790 L 500 820"/>
+
+  <!-- Step 6: 최종 응답 -->
+  <rect class="user-box" x="50" y="820" width="900" height="100"/>
+  <circle cx="85" cy="845" r="18" fill="#527fff"/>
+  <text x="85" y="852" text-anchor="middle" class="step-num">6</text>
+  <text x="110" y="850" class="label" style="fill: #527fff;">LLM 최종 응답</text>
+
+  <rect class="code-box" x="80" y="870" width="840" height="40"/>
+  <text x="100" y="890" class="code" style="font-size: 12px;">"현재 시각은 2025년 11월 9일 14시 30분입니다."</text>
+
+  <!-- Summary -->
+  <rect x="50" y="940" width="900" height="140" fill="#f9f9f9" stroke="#232f3e" stroke-width="2" rx="8"/>
+  <text x="500" y="970" text-anchor="middle" class="label" style="font-size: 16px;">핵심 포인트</text>
+
+  <text x="80" y="995" class="code">✓ LLM이 자동으로 필요한 함수를 판단</text>
+  <text x="80" y="1015" class="code">✓ tool_config로 함수 기능을 LLM에게 설명</text>
+  <text x="80" y="1035" class="code">✓ 애플리케이션이 실제 함수 실행 담당</text>
+  <text x="80" y="1055" class="code">✓ 실행 결과를 LLM에 다시 전달하여 자연스러운 응답 생성</text>
+</svg>
