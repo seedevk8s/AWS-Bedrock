@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1400">
+  <defs>
+    <style>
+      .title { font-family: Arial, sans-serif; font-size: 28px; font-weight: bold; fill: #232f3e; }
+      .subtitle { font-family: Arial, sans-serif; font-size: 15px; fill: #545b64; }
+      .section-title { font-family: Arial, sans-serif; font-size: 18px; fill: #232f3e; font-weight: 600; }
+      .label { font-family: Arial, sans-serif; font-size: 13px; fill: #232f3e; font-weight: 600; }
+      .desc { font-family: Arial, sans-serif; font-size: 12px; fill: #545b64; }
+      .code { font-family: 'Courier New', monospace; font-size: 10px; fill: #232f3e; }
+      .step-num { font-family: Arial, sans-serif; font-size: 20px; font-weight: bold; fill: #ffffff; }
+      .box { fill: #ffffff; stroke: #545b64; stroke-width: 2; rx: 8; }
+      .step-box { fill: #e6f2ff; stroke: #527fff; stroke-width: 3; rx: 10; }
+      .code-box { fill: #f5f5f5; stroke: #879596; stroke-width: 1.5; rx: 4; }
+      .key-box { fill: #fff5e6; stroke: #ff9900; stroke-width: 2; rx: 5; }
+      .arrow { fill: none; stroke: #232f3e; stroke-width: 2.5; marker-end: url(#arrowhead); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#232f3e" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="600" y="40" text-anchor="middle" class="title">LangChain 기본 개념</text>
+  <text x="600" y="65" text-anchor="middle" class="subtitle">langchain_tool.py로 배우는 핵심 구조</text>
+
+  <!-- Step 1: 언어 모델 선언 -->
+  <rect class="step-box" x="50" y="90" width="1100" height="140"/>
+  <circle cx="85" cy="115" r="22" fill="#527fff"/>
+  <text x="85" y="124" text-anchor="middle" class="step-num">1</text>
+  <text x="115" y="120" class="section-title" style="fill: #527fff;">언어 모델 선언</text>
+
+  <rect class="code-box" x="80" y="145" width="1040" height="50"/>
+  <text x="100" y="165" class="code">from langchain_aws import ChatBedrock</text>
+  <text x="100" y="180" class="code">llm = ChatBedrock(model_id="amazon.nova-micro-v1:0")</text>
+
+  <rect class="key-box" x="80" y="205" width="1040" height="15"/>
+  <text x="100" y="217" class="desc" style="font-weight: 600;">✓ ChatBedrock: AWS Bedrock 모델을 LangChain에서 사용할 수 있게 래핑한 클래스</text>
+
+  <path class="arrow" d="M 600 230 L 600 260"/>
+
+  <!-- Step 2: 도구 정의 -->
+  <rect class="step-box" x="50" y="260" width="1100" height="220"/>
+  <circle cx="85" cy="285" r="22" fill="#527fff"/>
+  <text x="85" y="294" text-anchor="middle" class="step-num">2</text>
+  <text x="115" y="290" class="section-title" style="fill: #527fff;">도구(Tool) 정의</text>
+
+  <rect class="code-box" x="80" y="315" width="1040" height="125"/>
+  <text x="100" y="335" class="code">from langchain_core.tools import tool</text>
+  <text x="100" y="350" class="code"></text>
+  <text x="100" y="365" class="code">@tool</text>
+  <text x="100" y="380" class="code">def get_current_time(timezone: str, location: str) -> str:</text>
+  <text x="120" y="395" class="code">"""현재 시간을 YYYY-MM-DD HH:MI:SS 형식으로 반환</text>
+  <text x="120" y="410" class="code">Args: timezone (str): 타임존(예: "Asia/Seoul")</text>
+  <text x="120" y="425" class="code">      location (str): 지역명"""</text>
+  <text x="120" y="440" class="code">return f"{timezone} ({location}) 현재시간 {now}"</text>
+
+  <rect class="key-box" x="80" y="450" width="1040" height="20"/>
+  <text x="100" y="463" class="desc" style="font-weight: 600;">✓ @tool 데코레이터: Python 함수를 LangChain 도구로 자동 변환</text>
+  <text x="100" y="477" class="desc" style="font-weight: 600;">✓ docstring: LLM이 이 함수의 기능과 사용법을 이해하는 핵심 정보</text>
+
+  <path class="arrow" d="M 600 480 L 600 510"/>
+
+  <!-- Step 3: 도구를 모델에 바인딩 -->
+  <rect class="step-box" x="50" y="510" width="1100" height="160"/>
+  <circle cx="85" cy="535" r="22" fill="#527fff"/>
+  <text x="85" y="544" text-anchor="middle" class="step-num">3</text>
+  <text x="115" y="540" class="section-title" style="fill: #527fff;">도구를 모델에 바인딩</text>
+
+  <rect class="code-box" x="80" y="565" width="1040" height="65"/>
+  <text x="100" y="585" class="code">tools = [get_current_time]</text>
+  <text x="100" y="600" class="code">tool_dict = {"get_current_time": get_current_time}</text>
+  <text x="100" y="615" class="code"></text>
+  <text x="100" y="630" class="code">llm_with_tools = llm.bind_tools(tools)</text>
+
+  <rect class="key-box" x="80" y="640" width="1040" height="20"/>
+  <text x="100" y="653" class="desc" style="font-weight: 600;">✓ bind_tools(): 모델에 사용 가능한 도구 목록을 알려줌</text>
+  <text x="100" y="667" class="desc" style="font-weight: 600;">✓ tool_dict: 나중에 도구를 실행하기 위한 매핑 딕셔너리</text>
+
+  <path class="arrow" d="M 600 670 L 600 700"/>
+
+  <!-- Step 4: 메시지 구성 및 모델 호출 -->
+  <rect class="step-box" x="50" y="700" width="1100" height="180"/>
+  <circle cx="85" cy="725" r="22" fill="#527fff"/>
+  <text x="85" y="734" text-anchor="middle" class="step-num">4</text>
+  <text x="115" y="730" class="section-title" style="fill: #527fff;">메시지 구성 &amp; 모델 호출</text>
+
+  <rect class="code-box" x="80" y="755" width="1040" height="85"/>
+  <text x="100" y="775" class="code">from langchain_core.messages import HumanMessage, SystemMessage</text>
+  <text x="100" y="790" class="code"></text>
+  <text x="100" y="805" class="code">messages = [</text>
+  <text x="120" y="820" class="code">SystemMessage("당신은 tools를 사용할 수 있다."),</text>
+  <text x="120" y="835" class="code">HumanMessage("부산은 지금 몇 시야?")</text>
+  <text x="100" y="850" class="code">]</text>
+
+  <rect class="code-box" x="80" y="850" width="1040" height="20"/>
+  <text x="100" y="865" class="code">response = llm_with_tools.invoke(messages)</text>
+
+  <rect class="key-box" x="80" y="880" width="1040" height="15"/>
+  <text x="100" y="892" class="desc" style="font-weight: 600;">✓ Messages: 대화를 구조화 (SystemMessage=지시, HumanMessage=사용자 입력)</text>
+
+  <path class="arrow" d="M 600 895 L 600 925"/>
+
+  <!-- Step 5: 도구 호출 처리 -->
+  <rect class="step-box" x="50" y="925" width="1100" height="200"/>
+  <circle cx="85" cy="950" r="22" fill="#527fff"/>
+  <text x="85" y="959" text-anchor="middle" class="step-num">5</text>
+  <text x="115" y="955" class="section-title" style="fill: #527fff;">도구 호출 처리</text>
+
+  <rect class="code-box" x="80" y="980" width="1040" height="105"/>
+  <text x="100" y="1000" class="code">for tool_call in response.tool_calls:</text>
+  <text x="120" y="1015" class="code">selected_tool = tool_dict[tool_call["name"]]  # 함수 이름으로 조회</text>
+  <text x="120" y="1030" class="code">print(tool_call["args"])  # LLM이 추론한 인자</text>
+  <text x="120" y="1045" class="code"># {"timezone": "Asia/Seoul", "location": "부산"}</text>
+  <text x="120" y="1060" class="code"></text>
+  <text x="120" y="1075" class="code">tool_msg = selected_tool.invoke(tool_call)  # 실제 함수 실행</text>
+  <text x="120" y="1090" class="code">messages.append(tool_msg)  # 결과를 대화에 추가</text>
+
+  <rect class="key-box" x="80" y="1095" width="1040" height="20"/>
+  <text x="100" y="1108" class="desc" style="font-weight: 600;">✓ tool_calls: LLM이 판단한 호출할 도구와 인자 정보</text>
+  <text x="100" y="1122" class="desc" style="font-weight: 600;">✓ 실제 함수 실행은 애플리케이션이 담당 → 결과를 다시 대화에 추가</text>
+
+  <!-- Summary Section -->
+  <rect x="50" y="1145" width="1100" height="230" fill="#f0f8ff" stroke="#527fff" stroke-width="3" rx="10"/>
+  <text x="600" y="1175" text-anchor="middle" class="section-title" style="fill: #527fff; font-size: 20px;">핵심 개념 정리</text>
+
+  <!-- Concepts -->
+  <rect class="box" x="80" y="1195" width="520" height="160"/>
+  <text x="100" y="1220" class="label" style="fill: #527fff;">LangChain 주요 컴포넌트</text>
+  <text x="100" y="1240" class="desc">1. <text class="label" style="fill: #232f3e;">ChatBedrock</text>: LLM 래퍼</text>
+  <text x="100" y="1260" class="desc">2. <text class="label" style="fill: #232f3e;">@tool</text>: 함수 → 도구 변환</text>
+  <text x="100" y="1280" class="desc">3. <text class="label" style="fill: #232f3e;">bind_tools()</text>: 도구 등록</text>
+  <text x="100" y="1300" class="desc">4. <text class="label" style="fill: #232f3e;">Messages</text>: 대화 구조화</text>
+  <text x="100" y="1320" class="desc">5. <text class="label" style="fill: #232f3e;">tool_calls</text>: 도구 호출 정보</text>
+  <text x="100" y="1340" class="desc">6. <text class="label" style="fill: #232f3e;">invoke()</text>: 모델 실행</text>
+
+  <rect class="box" x="620" y="1195" width="500" height="160"/>
+  <text x="640" y="1220" class="label" style="fill: #ff9900;">실행 흐름</text>
+  <text x="640" y="1240" class="desc">① LLM이 질문 분석</text>
+  <text x="640" y="1260" class="desc">② 필요한 도구 판단</text>
+  <text x="640" y="1280" class="desc">③ tool_calls에 함수명+인자 반환</text>
+  <text x="640" y="1300" class="desc">④ 앱이 실제 함수 실행</text>
+  <text x="640" y="1320" class="desc">⑤ 결과를 대화에 추가</text>
+  <text x="640" y="1340" class="desc">⑥ LLM이 최종 답변 생성</text>
+</svg>
